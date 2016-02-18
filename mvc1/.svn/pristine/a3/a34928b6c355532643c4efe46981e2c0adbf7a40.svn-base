@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memo">
+  <select id="list" resultType="m">
+    select * from memo where u_id=#{u_id} order by m_num desc
+  </select>
+  
+  <select id="detail" resultType="m">
+    select * from memo where m_num=#{m_num}
+  </select>
+  
+  <insert id="insert">
+  	insert into memo values(#{m_num}, #{u_id}, #{m_title}, #{m_content}, #{m_fname})
+  </insert>
+  
+  <update id="update">
+   update memo set m_title=#{m_title}, m_content=#{m_content}, m_fname=#{m_fname} where m_num=#{m_num}
+  </update>
+  
+  <delete id="delete">
+  	delete memo where m_num=#{m_num}
+  </delete>
+  
+  <select id="maxNum" resultType="java.lang.Integer">
+  	select nvl(max(m_num),0)+1 from memo
+  </select>
+  
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="com/hanb/db/hanb.properties"/>
+	<typeAliases >
+		<!-- Vo는 여기에 추가할 것 -->
+		<typeAlias type="com.hanb.dao.F_TestVo" alias="fv"/>
+		<typeAlias type="com.hanb.dao.MemoVo" alias="m"/>
+		<typeAlias type="com.hanb.dao.ScheduleVo" alias="ScheduleVo"/>
+		<typeAlias type="com.hanb.dao.MemberVo" alias="u"/>
+		<typeAlias type="com.hanb.dao.GroupMasterVo" alias="gv"/>
+		<typeAlias type="com.hanb.dao.GroupMemberVo" alias="gmv"/>
+	</typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <!-- Upload된 IP는 은상씨 옆에 서버컴퓨터 자리 아이피로 되어 있습니다.
+        	테이블 추가,수정은 은상씨, 준모에게 말씀해주세요.-->
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${pwd}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  	<!-- mapper는 여기에 추가할 것 -->
+    <mapper resource="com/hanb/db/F_TestMapper.xml"/>
+    <mapper resource="com/hanb/db/scheduleMapper.xml"/>
+    <mapper resource="com/hanb/db/MemoMapper.xml"/>
+    <mapper resource="com/hanb/db/MemberMapper.xml"/>
+    <mapper resource="com/hanb/db/GroupMemberMapper.xml"/>
+    <mapper resource="com/hanb/db/GroupMasterMapper.xml"/>
+  </mappers>
+ 
+</configuration>

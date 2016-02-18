@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedule">
+	<select id="today_list" resultType="scheduleVo">
+	select to_char(startd, 'yyyy"년 "MM"월 "dd"일 "HH24"시"') startd,	to_char(endd, 'yyyy"년 "MM"월 "dd"일 "HH24"시"') endd, title from schedule
+	 where u_id=#{u_id}
+	 and to_char(endd, 'yyyy"년 "MM"월 "dd"일 "')=to_char(sysdate, 'yyyy"년 "MM"월 "dd"일 "')
+	</select>
+
+	<select id="today_listAll" resultType="scheduleVo">
+	select to_char(startd, 'yyyy"년 "MM"월 "dd"일 "HH24"시"') startd,	to_char(endd, 'yyyy"년 "MM"월 "dd"일 "HH24"시"') endd, title from schedule
+	 where u_id=#{u_id} and to_char(sysdate, 'yyyy"년 "MM"월 "dd"일 "HH24"시 "')
+	  between to_char(startd, 'yyyy"년 "MM"월 "dd"일 "HH24"시 "')and
+	   to_char(endd, 'yyyy"년 "MM"월 "dd"일 "HH24"시 "')
+	</select>
+
+  <!-- 일정 전체 조회 -->
+  <select id="selectAll" resultType="scheduleVo">
+    select * from schedule
+  </select>
+
+  <!-- 일정(calendar) 조회 -->
+ <!--  s_num, 뺐음.-->
+  <select id="selectCalendar" resultType="scheduleVo">
+    select 
+           u_id,
+           g_id,
+           to_char(startd, 'yyyy"년"mm"월"dd"일" hh24:mi') startd,
+           to_char(endd, 'yyyy"년"mm"월"dd"일" hh24:mi') endd,
+           category,
+           attach,
+           title,
+           content,
+           place,
+           alarm,
+           finishd,
+           canceld,
+           delayd    
+	from schedule where u_id =#{u_id}
+  </select>
+  
+  <!-- 일정검색 -->
+  <select id="selectSearch" resultType="scheduleVo">
+    select s_num,
+           u_id,
+           g_id,
+           startd,
+           endd,
+           category,
+           attach,
+           nvl(title, ' ')   title,
+           nvl(content, ' ') content,
+           nvl(place, ' ')   place,
+           alarm,
+           finishd,
+           canceld,
+           delayd
+      from (
+            select 
+                   rownum rno,
+                   s_num,  
+                   u_id,
+                   g_id,
+                   to_char(startd,'yyyy-mm-dd hh24') startd,
+                   to_char(endd,'yyyy-mm-dd hh24') endd,
+                   category,
+                   attach, 
+                   title,  
+                   content,  
+                   place,
+                   alarm,
+                   finishd,
+                   canceld,
+                   delayd 
+              from schedule 
+             where u_id = #{u_id}
+    <if test="searchWord != null">
+               and title like '%'||#{searchWord}||'%'
+    </if>
+    <if test="startd != null">
+               and endd   &gt;= to_date(#{startd}, 'yyyymmddhh24')
+    </if>
+    <if test="endd != null">
+			   and startd &lt;= to_date(#{endd},   'yyyymmddhh24')
+    </if>
+             order by startd
+           )
+    <if test="sRno != null and eRno != null">
+     where rno &gt; #{sRno} and rno &lt;= #{eRno}
+    </if>
+  </select>
+  
+  <!-- 일정 검색 시 건수 -->
+  <select id="selectSearchTot" resultType="int">
+    select count(*) Rcnt 
+      from schedule 
+     where u_id = #{u_id}
+    <if test="searchWord != null">
+       and title like '%'||#{searchWord}||'%'
+    </if>
+    <if test="startd != null">
+       and endd   &gt;= to_date(#{startd}, 'yyyymmddhh24')
+    </if>
+    <if test="endd != null">
+       and startd &lt;= to_date(#{endd},   'yyyymmddhh24')
+    </if>
+  </select>
+  
+  <!-- 특정 일정 조회 -->
+  <select id="selectOne" parameterType="int" resultType="scheduleVo">
+    select * from schedule where s_num = #{s_num}
+  </select>
+
+  <!-- 일정 등록 -->  
+  <insert id="insert">
+    insert into schedule(
+           s_num,
+           u_id,
+           g_id,
+           startd,
+           endd,
+           category,
+           attach,
+           title,
+           content,
+           place,
+           alarm,
+           finishd,
+           canceld,
+           delayd ) 
+    values(seq_schedule.nextval,
+           #{u_id},
+           #{g_id},
+           to_date(#{startD},'yyyy/mm/dd/hh24:mi'),
+           to_date(#{endD},'yyyy/mm/dd/hh24:mi'),
+           null,
+           #{attach},
+           #{title},
+           #{content},
+           #{place},
+           null,
+           null,
+           null,
+           null)
+  </insert>	
+  
+  <!-- 신규 일정 번호 추출 -->  
+  <select id="max" resultType="Integer">
+        select nvl(max(s_num),0)+1 from schedule
+  </select>
+   	
+  <!-- 개인일정 조회 20160121 -->
+  <select id="selectSchedulePsn" resultType="scheduleVo">
+    select s_num,
+           u_id,
+           g_id,
+           to_char(startd, 'yyyy"년"mm"월"dd"일" hh24:mi') startd,
+           to_char(endd, 'yyyy"년"mm"월"dd"일" hh24:mi')   endd,
+           category,
+           attach,
+           title,
+           content,
+           place,
+           alarm,
+           finishd,
+           canceld,
+           delayd
+      from schedule
+     where u_id  = #{u_id}
+       --and g_id  is null
+       and startd &gt;= to_date(#{sStartd}, 'yyyymmddhh24')
+       and endd   &lt;  to_date(#{sStartd}, 'yyyymmddhh24') + 1
+     order by startd desc
+  </select>
+  
+  <!-- 그룹일정 조회 20160121 -->
+  <select id="selectScheduleGid" resultType="scheduleVo">
+    select s.s_num,
+           s.u_id,
+           s.g_id,
+           to_char(startd, 'yyyy"년"mm"월"dd"일" hh24:mi') startd,
+           to_char(endd, 'yyyy"년"mm"월"dd"일" hh24:mi')   endd,
+           s.category,
+           s.attach,
+           s.title,
+           s.content,
+           s.place,
+           s.alarm,
+           s.finishd,
+           s.canceld,
+           s.delayd,
+           gm.u_id    cheif_u_id,
+           mb.u_name  cheif_u_name
+      from schedule    s,
+           groupmaster gm,
+           groupmember gd,
+           member      mb
+     where s.g_id  = gm.g_id
+       and gm.u_id = mb.u_id
+       and gm.g_id = gd.g_id
+       and gd.u_id = #{u_id}
+       --and s.g_id  is not null
+       and s.startd &gt;= to_date(#{sStartd}, 'yyyymmddhh24')
+       and s.endd   &lt;  to_date(#{sStartd}, 'yyyymmddhh24') + 1
+     order by s.startd desc
+  </select>
+
+</mapper>

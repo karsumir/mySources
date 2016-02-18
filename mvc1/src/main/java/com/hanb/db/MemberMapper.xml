@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="loginMember" resultType="java.lang.String">
+		select u_pwd from member where u_id=#{u_id}
+	</select>
+
+	<insert id="insert">
+  		insert into member  values (#{u_id}, #{u_pwd}, #{u_name}, #{u_email}, #{u_tel}, #{u_addr}, #{u_ask}, #{u_answr}, 0,0,0, null )
+	</insert>
+	
+	<update id="memberDelete">
+		update member set u_pwd=null,u_name=null,u_email=null,u_tel=null,u_addr=null,u_ask=null,u_answr=null, u_schdlr=null, u_memo=null, u_wthr=null where u_id=#{u_id}
+	</update>
+  <update id="update">
+     update member set u_name=#{u_name},u_addr=#{u_addr},u_tel=#{u_tel},u_email=#{u_email} where u_id=#{u_id}
+	</update>
+	<select id="detail" resultType="u">
+		select * from member where u_id=#{u_id}
+	</select>
+	<select id="findId" resultType="java.lang.String">
+		select u_id from member where u_name=#{name} and u_email=#{email}
+	</select>
+	<update id="updateNewPwd">
+		update member set u_pwd=#{u_pwd} where u_id=#{u_id}
+	</update>
+		<update id="delete">
+		update member set u_pwd=null,u_name=null,u_email=null,u_tel=null,u_addr=null,u_ask=null,u_answr=null, u_schdlr=null, u_memo=null, u_wthr=null where u_id=#{u_id}
+	</update>
+	<select id="list" resultType="u">
+		select * from member
+		<if test="searchField!=null">
+			<if test="searchSel=='id'">
+				where u_id like '%'||#{searchField}||'%'
+			</if>
+			<if test="searchSel=='name'">
+				where u_name like '%'||#{searchField}||'%'
+			</if>
+			<if test="searchSel=='all'">
+				where u_id like '%'||#{searchField}||'%' or u_name like '%'||#{searchField}||'%'
+			</if>
+		</if>
+	</select>
+		<update id="updatepwd">
+	update member set u_pwd=#{u_pwd} where u_id=#{u_id}
+	</update>
+	
+</mapper>

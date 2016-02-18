@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="groupMember">	
+	   <select id="list" resultType="gmv">
+	   select groupMaster.g_id,
+	          groupMaster.u_id chief_u_id, 
+	          groupMember.u_id 
+	     from groupMember, 
+	          groupMaster 
+	    where groupMember.g_id = groupMaster.g_id
+	      and groupMaster.g_id = #{g_id}
+	   </select>
+	   <update id="updateRegy">
+			update groupMember 
+			   set regY = #{regY} 
+			 where u_id = #{u_id}
+			   and g_id = #{g_id}
+	   </update>	
+	   <delete id="delete">
+	   delete groupMember where u_id=#{u_id}
+	   </delete>
+	   <insert id="insert">
+	   insert into groupMember values(#{g_id}, #{u_id}, sysdate,0,0)
+	   </insert> 
+	   <select id="detail" resultType="gmv">
+	   select * from groupMember where g_id = #{g_id} and u_id=#{u_id}
+	   </select>
+	   
+		<select id="searchGroupMember" resultType="u">
+			select * 
+			  from member mem
+			 where not exists (select 1
+			                     from groupmember sub
+			                    where sub.u_id = mem.u_id
+			                      and sub.g_id = #{g_id}
+			                  )
+			<if test="searchField!=null">
+				<if test="searchSel=='id'">
+					and u_id like '%'||#{searchField}||'%'
+				</if>
+				<if test="searchSel=='name'">
+					and u_name like '%'||#{searchField}||'%'
+				</if>
+				<if test="searchSel=='all'">
+					and (u_id like '%'||#{searchField}||'%' or u_name like '%'||#{searchField}||'%')
+				</if>
+			</if>
+		</select>
+		<select id="inviteGroupMember" resultType="gmv">
+			select gmst.g_id,
+			       gmst.g_name,
+			       gmem.u_id,
+			       gmem.u_joind
+			  from groupMaster gmst,
+			       groupMember gmem
+			 where gmst.g_id  = gmem.g_id
+			   and gmem.u_id  = #{u_id}
+			   and gmst.g_use = 1 -- 0 미사용, 1 사용 
+			   and gmem.regy  = 0 -- 0 초대중, 1 초대승인 
+		</select>
+	</mapper>

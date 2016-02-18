@@ -1,0 +1,138 @@
+
+	.haveSchedule#clicked{
+		background-image:url("../../resources/images/calendar/dot-tr.png");
+		background-repeat: no-repeat;
+		background-color: LightSkyBlue ;
+		background-position: center 80%;
+		color: white;
+	}
+	.haveSchedule#hereIsTodayClicked{
+		background-image:url("../../resources/images/calendar/dot-tr.png");
+		background-repeat: no-repeat;
+		background-color: LightSkyBlue ;
+		background-position: center 80%;
+		color: white;
+	}
+	#clicked{
+		background-color: LightSkyBlue ;
+		color: white;
+	}
+	#hereIsTodayClicked{
+		background-color: LightSkyBlue ;
+		color: white;
+	} 
+	
+	#addSchedule{
+		background-color: white;
+	}
+	.b-close{
+		display: none;
+	}
+	.see{
+		min-width:20px;
+	}
+	.fromTo{
+		min-width: 130px;
+	}
+	#titles{
+		padding-left: 10px;
+		
+	}
+	#RedLine{
+		border-bottom: ridge red;
+	}
+	.today.haveSchedule{	
+		background-image:url("../../resources/images/calendar/dot-tr.png");
+		background-repeat: no-repeat;
+		background-position: center 80%;
+		background-color: Bisque;
+	}
+	.haveSchedule{
+		background-image:url("../../resources/images/calendar/dot-tr.png");
+		background-repeat: no-repeat;
+		background-position: center 80%;
+	}
+	#firstSunday{
+		border-bottom: ridge red;
+	}
+	.notThis{
+		font-size: 30px;
+		color: LightGrey;
+		vertical-align: top;
+		padding-top: 1%;
+		border-bottom: ridge;
+		height: 70px;
+	}
+	.prev{
+		border-bottom-color: LightGrey;
+	}
+	.this{
+		font-size: 30px;
+		vertical-align: top;
+		padding-top: 1%;
+		border-bottom: ridge;
+		border-bottom-color: LightGrey;
+		height: 70px;
+	}
+	.dayTd{
+		border-bottom:10px;
+		border-bottom: ridge;
+		border-bottom-color: black;
+	}
+	
+	.sat{
+		color: Blue;
+		border-bottom-color: Blue;
+	}
+	.sun{
+		color: Red;
+		border-bottom-color: Red;
+	}
+	#schdle{
+		width:100%;
+		font-size: 25px;
+	}
+	
+	#calendar{
+		width:100%;
+		height: auto;
+		border-spacing: 3px 0px;
+		font-size: 30px;
+	}
+	#hereIsToday{
+		background-color: Bisque;
+	}
+	#today{
+	 	width: 50%;
+	 	float: left;
+	 	padding-top: 10px;
+	}
+	#icons{
+		width:48%;
+		text-align: right;
+		float: left;
+	}
+	#yearTD{
+	 	font-size: 30px; 
+	 	text-align: center;
+	 	width: 100%; 
+	}
+	#monthTD{
+		font-size: 40px; 
+		width: 100%;
+		text-align: center;
+	}
+	.btn{
+		font-size: 30px;
+		text-align: center;
+	}
+
+	.icon{
+		width: 25%;
+		height: 25%;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	#getToday{
+		font-size: 20px;
+	}

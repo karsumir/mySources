@@ -1,0 +1,90 @@
+@charset "utf-8";
+@import url(common.css);
+
+/* Contents */
+#content{padding-bottom:0}
+#content>div:nth-child(odd), #main_sec01{background-color:#fff}
+#content>div:nth-child(even), #main_sec02{background-color:#f9f7f7}
+#content>div:nth-child(odd) .mtit_area, #main_sec01 .mtit_area{border-bottom:1px solid #eaeaea}
+#content>div:nth-child(even) .mtit_area, #main_sec02 .mtit_area{border-bottom:1px solid #e6e4e4} 
+#main_sec01>div, #main_sec02>div{margin:0 auto;padding:61px 0 70px;width:100%;max-width:1020px}
+#main_sec01{}
+#main_sec02{}
+
+.ico{display:inline-block;background:url(../../images/kor/main/main_icon.png) no-repeat left top}
+
+/* Owl Carousel */
+.qlink_wrap{position:absolute;left:0;bottom:0;width:100%;padding:0 0 8px;background:url(../../images/common/bg_opacity85_red.png) repeat left top;text-align:center;z-index:10}
+.qlink{width:100%;max-width:1020px;margin:0 auto}
+.qlink a{display:inline-block}
+.qlink a .ico{width:50px;height:35px}
+.qlink a em{display:block;margin-top:-3px;font-weight:bold;font-size:12px;line-height:35px;letter-spacing:-0.075em;color:#fff}
+.qlink a em span{display:none}
+.qlink a:hover, .qlink a:focus{color:#fff}
+.qlink .qico01{background-position:-69px -13px}
+.qlink .qico02{background-position:-5px -80px}
+
+/* Main Title Area */
+.mtit_area{text-align:center}
+.mtit_area h2{font-weight:bold;font-size:26px;line-height:30px;color:#333;letter-spacing:0.025em;font-family:"Roboto", Malgun Gothic, "맑은 고딕", Dotum, "돋움", sans-serif}
+.mtit_area p{margin-top:21px;line-height:24px;letter-spacing:-0.05em;color:#666}
+.mtit_area p span{display:block}
+
+/* Main Section01 :IR */
+#main_sec01 .mtit_area{padding-bottom:36px}
+
+/* Main Section02 :Sustainability */
+#main_sec02>div{padding-bottom:53px}
+#main_sec02 .mtit_area{padding-bottom:36px}
+}
+@media all and (max-width:1023px){
+	body{overflow-y:scroll}
+	img{max-width:100%}
+
+	/* layout */
+	#wrap{overflow:hidden;min-width:0}
+	#header{display:none}
+	#content{padding-bottom:30px;background-color:#f6f6f7}
+
+	#footer{background-color:#818181}
+	#footer .infoot{width:100%;height:auto;padding:65px 15px 19px 15px}
+	#footer .infoot .address{display:block;height:auto;margin:0;font-size:12px;font-weight:normal;color:#fff;line-height:18px}
+	/* //layout */
+
+	#main_sec01>div, #main_sec02>div{padding-left:15px;padding-right:15px}
+
+
+	/* Main Section02 :Sustainability */
+	#main_sec02 .row>div{min-height:153px}
+	#main_sec02 .row>div:first-child + div + div + div{clear:both}
+
+}
+@media all and (max-width:767px){
+
+
+
+	#main_sec01>div, #main_sec02>div{padding:26px 15px 36px}
+
+	.mtit_area p{text-align:left;margin-top:6px}
+	.mtit_area p span{display:inline}
+
+	/* Main Slider */
+
+
+	/* Main Section01 :IR */
+	#main_sec01 .mtit_area{padding-bottom:26px}
+
+	/* Main Section02 :Sustainability */
+	#main_sec02 .row>div{}
+	#main_sec02 .row>div{min-height:113px;margin:10px 0}
+	#main_sec02 .row>div:first-child + div + div + div{clear:none}
+	#main_sec02 .row>div:first-child + div + div, #main_sec02 .row>div:first-child + div + div + div + div{clear:both}
+
+}
+@media all and (max-width:480px){
+
+	/* Main Section02 :Sustainability */
+	#main_sec02 .row>div{float:none;margin-top:10px;width:100%;min-height:0}
+	#main_sec02 .row>div:first-child{margin-top:0}
+
+}
